@@ -58,8 +58,8 @@ export default class LokalsNftApp extends React.Component
 		if (!this.ethereum)
 		{
 			console.log("Make sure you have metamask!");
-			this.displayNotification("Make sure you have Metamask",
-			"Couldn't find Metamask installed.", "danger", "top-full", "top",
+			this.displayNotification("Metamask is required!",
+			"Go to https://metamask.io/download and install Metamask. Then get some ETH from Rinkeby (Test Network) by using https://app.mycrypto.com/faucet. After that you can connect your wallet by clicking the button below.", "danger", "top", "top-full",
 			{
 				duration: 0,
 				showIcon: true,
@@ -77,6 +77,9 @@ export default class LokalsNftApp extends React.Component
 		try
 		{
 			console.log("getNFTContract exec start");
+			if(!this._setupEthereum())
+				return null;
+
 			if(this.nftContract==null)
 			{
 				console.log("getting provider for NFT contract and saving local variable.");
@@ -104,10 +107,9 @@ export default class LokalsNftApp extends React.Component
 
 	checkIfWalletIsConnected = () =>
 	{
-		if(!this.ethereum){
-			 this.displayNotification("getNFTContract Ooops... ","dsadasdashbjh")
-			return
-		}
+		if(!this._setupEthereum())
+			return;
+
 		const acc = this.state.currentAccount;
 		if(acc!=null && acc!="")
 		{
@@ -123,43 +125,47 @@ export default class LokalsNftApp extends React.Component
 
 		this.ethereum.request({ method: 'eth_accounts'})
 		.then(accounts =>
+		{
+			if(accounts.length !== 0)
 			{
-				if(accounts.length !== 0)
+				const account = accounts[0];
+				console.log("Wallet connected on account: ", account);
+				this.displayNotification("Wallet required", `Found an authorized account: ${account}`);
+
+				this.setState({currentAccount: account});
+
+				this.refreshApp();
+			}
+			else
+			{
+				console.log("Wallet not connected :(");
+
+				this.setState({currentAccount: ""});
+
+				this.displayNotification("No accounts found!",
+				"Go to https://metamask.io/download and install Metamask. Then get some ETH from Rinkeby (Test Network) by using https://app.mycrypto.com/faucet. After that you can connect your wallet by clicking the button below.",
+				"danger", "top-full", "top",
 				{
-					const account = accounts[0];
-					console.log("Wallet connected on account: ", account);
-					this.displayNotification("Wallet required", `Found an authorized account: ${account}`);
+					duration: 0,
+					showIcon: true,
+					click: false,
+					touch: false
+				});
 
-					this.setState({currentAccount: account});
-
-					this.refreshApp();
-				}
-				else
-				{
-					console.log("Wallet not connected :(");
-
-					this.setState({currentAccount: ""});
-
-					this.displayNotification("No accounts found!",
-					"Go to https://metamask.io/download and install Metamask. Then get some ETH from Rinkeby (Test Network) by using https://app.mycrypto.com/faucet. After that you can connect your wallet by clicking the button below.",
-					"danger", "top-full", "top",
-					{
-						duration: 0,
-						showIcon: true,
-						click: false,
-						touch: false
-					});
-
-				}
-			});
-		}
+			}
+		});
+	}
 
 		connectWallet = async () =>
 		{
 			console.log("connectWallet start");
 			// https://docs.metamask.io/guide/rpc-api.html#table-of-contents
+
 			try
 			{
+				if(!this._setupEthereum())
+					return null;
+
 				if(!this.checkIfWalletIsConnected())
 				{
 					const accounts = await this.ethereum.request({ method: "eth_requestAccounts" });
@@ -190,10 +196,7 @@ export default class LokalsNftApp extends React.Component
 					});
 					console.log("connectWallet finish");
 				}
-				else
-				{
-					console.log("Wallet already connected");
-				}
+
 			}
 			catch (error)
 			{
@@ -272,7 +275,7 @@ export default class LokalsNftApp extends React.Component
 			catch (error)
 			{
 				console.log(error);
-				this.displayNotification("setupEventListener Ooops... "+error.name,
+				this.displayNotification("getTotalNfts Ooops... "+error.name,
 				error.message,
 				"danger", "top-full", "top",
 				{
@@ -295,7 +298,7 @@ export default class LokalsNftApp extends React.Component
 			catch (error)
 			{
 				console.log(error);
-				this.displayNotification("setupEventListener Ooops... "+error.name,
+				this.displayNotification("getTotalMaxNfts Ooops... "+error.name,
 				error.message,
 				"danger", "top-full", "top",
 				{
@@ -310,16 +313,17 @@ export default class LokalsNftApp extends React.Component
 		refreshApp = () =>
 		{
 			this.getTotalNfts();
-
 			this.getTotalMaxNfts();
 		}
 
 		componentDidMount()
 		{
 			console.log("componentDidMount start");
-			this._setupEthereum()
-			this.checkIfWalletIsConnected();
-			this.setupEventListener();
+			if(this._setupEthereum())
+			{
+				this.checkIfWalletIsConnected();
+				this.setupEventListener();
+			}
 			console.log("componentDidMount end");
 		}
 
