@@ -21,10 +21,7 @@ export default class LokalsNftApp extends React.Component
 	constructor(props)
 	{
 		console.log("LokalsNftApp ctor() start");
-		super(props);
-
-		if(!this._setupEthereum())
-		return null;
+		super(props)
 
 		this.state =
 		{
@@ -40,6 +37,7 @@ export default class LokalsNftApp extends React.Component
 	{
 		//	 success	 danger	 info	 default	 warning
 
+		console.log(store,'addNotificationaddNotificationaddNotification')
 		store.addNotification({
 			title: title,
 			message: msg,
@@ -106,6 +104,10 @@ export default class LokalsNftApp extends React.Component
 
 	checkIfWalletIsConnected = () =>
 	{
+		if(!this.ethereum){
+			 this.displayNotification("getNFTContract Ooops... ","dsadasdashbjh")
+			return
+		}
 		const acc = this.state.currentAccount;
 		if(acc!=null && acc!="")
 		{
@@ -117,6 +119,7 @@ export default class LokalsNftApp extends React.Component
 		// In order to protect user privacy, the authors recommend not exposing any accounts by default.
 		// Instead, Providers should support RPC methods for explicitly requesting account access, such as eth_requestAccounts (see EIP-1102)
 		//  or wallet_requestPermissions (see EIP-2255).
+
 
 		this.ethereum.request({ method: 'eth_accounts'})
 		.then(accounts =>
@@ -314,6 +317,7 @@ export default class LokalsNftApp extends React.Component
 		componentDidMount()
 		{
 			console.log("componentDidMount start");
+			this._setupEthereum()
 			this.checkIfWalletIsConnected();
 			this.setupEventListener();
 			console.log("componentDidMount end");
