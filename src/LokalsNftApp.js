@@ -93,7 +93,7 @@ export default class LokalsNftApp extends React.Component
 			console.log(error);
 			this.displayNotification("getNFTContract Ooops... "+error.name,
 			error.message,
-			"danger", "top-full", "top",
+			"danger", "top", "top-full",
 			{
 				duration: 0,
 				showIcon: true,
@@ -144,7 +144,7 @@ export default class LokalsNftApp extends React.Component
 
 				this.displayNotification("No accounts found!",
 				"Go to https://metamask.io/download and install Metamask. Then get some ETH from Rinkeby (Test Network) by using https://app.mycrypto.com/faucet. After that you can connect your wallet by clicking the button below.",
-				"danger", "top-full", "top",
+				"danger", "top", "top-full",
 				{
 					duration: 0,
 					showIcon: true,
@@ -187,7 +187,7 @@ export default class LokalsNftApp extends React.Component
 					console.log("No authorized accounts found...");
 					this.displayNotification("No authorized accounts found!",
 					"Go to https://metamask.io/download and install Metamask. Then get some ETH from Rinkeby (Test Network) by using https://app.mycrypto.com/faucet. After that you can connect your wallet by clicking the button below.",
-					"danger", "top-full", "top",
+					"danger", "top", "top-full",
 					{
 						duration: 0,
 						showIcon: true,
@@ -201,7 +201,7 @@ export default class LokalsNftApp extends React.Component
 			catch (error)
 			{
 				console.log(error);
-				this.displayNotification("connectWallet Ooops... "+error.name, error.message, "danger", "top-full", "top",
+				this.displayNotification("connectWallet Ooops... "+error.name, error.message, "danger", "top", "top-full",
 				{
 					duration: 0,
 					showIcon: true,
@@ -254,7 +254,7 @@ export default class LokalsNftApp extends React.Component
 			catch (error)
 			{
 				console.log(error);
-				this.displayNotification("setupEventListener Ooops... "+error.name, error.message, "danger", "top-full", "top",
+				this.displayNotification("setupEventListener Ooops... "+error.name, error.message, "danger", "top", "top-full",
 				{
 					duration: 0,
 					showIcon: true,
@@ -277,7 +277,7 @@ export default class LokalsNftApp extends React.Component
 				console.log(error);
 				this.displayNotification("getTotalNfts Ooops... "+error.name,
 				error.message,
-				"danger", "top-full", "top",
+				"danger", "top", "top-full",
 				{
 					duration: 0,
 					showIcon: true,
@@ -300,7 +300,7 @@ export default class LokalsNftApp extends React.Component
 				console.log(error);
 				this.displayNotification("getTotalMaxNfts Ooops... "+error.name,
 				error.message,
-				"danger", "top-full", "top",
+				"danger", "top", "top-full",
 				{
 					duration: 0,
 					showIcon: true,
@@ -354,7 +354,7 @@ export default class LokalsNftApp extends React.Component
 			catch (error)
 			{
 				console.log(error.message);
-				this.displayNotification("Error!", error.message, "danger",	"top-full", "top", { duration: 0,	click: false,	showIcon: true } );
+				this.displayNotification("Error!", error.message, "danger",	"top", "top-full", { duration: 0,	click: false,	showIcon: true } );
 			}
 
 			this.setState({appIsMinting: false});
