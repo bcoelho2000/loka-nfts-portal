@@ -1,13 +1,14 @@
 .App {
   height: 100vh;
-  background-color: #0d1116;
+  background-color: white;
   overflow: scroll;
   text-align: center;
+	font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
 }
 
 .container {
   height: 100%;
-  background-color: #0d1116;
+  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -33,12 +34,11 @@
 
 .sub-text {
   font-size: 25px;
-  color: white;
-	font-style: italic;
+  color: black;
 }
 
 .gradient-text {
-  background: -webkit-linear-gradient(left, #60c657 30%, #35aee2 60%);
+  background: -webkit-linear-gradient(left, #21242b 30%, #21242b6b 60%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -55,22 +55,24 @@
   font-size: 16px;
   font-weight: bold;
   color: white;
+	font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
 }
 
 .connect-wallet-button {
-  background: -webkit-linear-gradient(left, #60c657, #35aee2);
+  background: -webkit-linear-gradient(left, #4a63e2, #4a63e29e);
   background-size: 200% 200%;
   animation: gradient-animation 4s ease infinite;
 }
 
 .mint-button {
-  background: -webkit-linear-gradient(left, #a200d6, #ff6fdf);
+  background: -webkit-linear-gradient(left, #4a63e2, #4a63e29e);
   background-size: 200% 200%;
   animation: gradient-animation 4s ease infinite;
   width: 45%;
   height: 150px;
   font-size: 40px;
   border-radius: 100px;
+	font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
 }
 
 .opensea-button {
@@ -78,8 +80,8 @@
 }
 
   .mint-count {
-  color: white;
-  font-size: 18px;
+  color: black;
+  font-size: 13px;
   font-weight: bold;
 }
 
@@ -96,7 +98,7 @@
 }
 
 .footer-text {
-  color: white;
+  color: black;
   font-size: 16px;
   font-weight: bold;
 }
